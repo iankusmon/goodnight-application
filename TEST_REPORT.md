@@ -54,6 +54,72 @@ All model and request specs cover:
 
 ---
 
+## 🌐 API Smoke Test Commands
+
+Assume server is running (`bin/rails s`) at [http://localhost:3000](http://localhost:3000)  
+and you already created two users in Rails console:
+
+```ruby
+User.create!(name: "Alice") # id = 1
+User.create!(name: "Bob")   # id = 2
+```
+
+### Run All Specs (Rails RSpec)
+```bash
+# Run everything
+bin/rspec
+
+# Run specific groups
+bin/rspec spec/requests/sleep_sessions_spec.rb      # Clock In/Out/List
+bin/rspec spec/requests/follows_and_feed_spec.rb    # Follow/Unfollow/Feed
+bin/rspec spec/models/follow_spec.rb                # Follow model validations
+bin/rspec spec/models/sleep_session_spec.rb         # SleepSession duration calc
+```
+
+### 1. Sleep Tracking
+```bash
+# 1.1 Clock In success
+curl -s -X POST http://localhost:3000/api/v1/users/1/sleep_sessions/clock_in | jq .
+
+# 1.2 Clock In failure (already clocked in)
+curl -s -X POST http://localhost:3000/api/v1/users/1/sleep_sessions/clock_in | jq .
+
+# 1.3 Clock Out success
+curl -s -X POST http://localhost:3000/api/v1/users/1/sleep_sessions/clock_out | jq .
+
+# 1.4 Clock Out failure (no open session)
+curl -s -X POST http://localhost:3000/api/v1/users/1/sleep_sessions/clock_out | jq .
+
+# 1.5 List sessions
+curl -s http://localhost:3000/api/v1/users/1/sleep_sessions | jq .
+```
+
+### 2. Follow / Unfollow
+```bash
+# 2.1 Follow success
+curl -s -X POST http://localhost:3000/api/v1/users/1/follows   -H "Content-Type: application/json"   -d '{"followed_id": 2}' | jq .
+
+# 2.2 Duplicate follow
+curl -s -X POST http://localhost:3000/api/v1/users/1/follows   -H "Content-Type: application/json"   -d '{"followed_id": 2}' | jq .
+
+# 2.3 Self-follow
+curl -s -X POST http://localhost:3000/api/v1/users/1/follows   -H "Content-Type: application/json"   -d '{"followed_id": 1}' | jq .
+
+# 2.4 Unfollow success
+curl -s -X DELETE http://localhost:3000/api/v1/users/1/follows/2 -w "Status: %{http_code}\n"
+```
+
+### 3. Feed
+```bash
+# 3.1 Feed success (after following & having sessions)
+curl -s http://localhost:3000/api/v1/users/1/feed | jq .
+
+# 3.2 Feed empty (no follows)
+curl -s http://localhost:3000/api/v1/users/99/feed | jq .
+```
+
+---
+
 ## 🚀 Notes for Manager
 
 - **Reliability**: APIs handle both success and error cases gracefully.  

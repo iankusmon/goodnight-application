@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+# Prefer vendored bin if present, else fall back to bundle exec
+vendored = File.expand_path("../vendor/bundle", __dir__)
+ENV["BUNDLE_PATH"] ||= vendored if Dir.exist?(vendored)
+exec Gem.bin_path("rspec-core", "rspec")
+

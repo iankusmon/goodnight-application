@@ -1,0 +1,39 @@
+  
+ActionController::RoutingError (No route matches [GET] "/api/v1/users"):
+  
+  
+ActionController::RoutingError (No route matches [GET] "/api/v1/users"):
+  
+  
+ActionController::RoutingError (No route matches [GET] "/api/v1/users"):
+  
+  
+ActionController::RoutingError (No route matches [GET] "/api/v1/users"):
+  
+  
+ActionController::RoutingError (No route matches [GET] "/api/v1/users"):
+  
+  
+ActionController::RoutingError (No route matches [GET] "/api/v1/users"):
+  
+  
+ActionController::RoutingError (No route matches [GET] "/api/v1/users"):
+  
+  
+ActionController::RoutingError (No route matches [GET] "/api/v1/users"):
+  
+  
+ActionController::RoutingError (No route matches [GET] "/api/v1/users"):
+  
+  
+ActiveRecord::RecordNotFound (Couldn't find Follow with [WHERE "follows"."follower_id" = $1 AND "follows"."followed_id" IS NULL]):
+  
+app/controllers/api/v1/follows_controller.rb:12:in `destroy'
+  
+ActiveRecord::RecordNotFound (Couldn't find Follow with [WHERE "follows"."follower_id" = $1 AND "follows"."followed_id" IS NULL]):
+  
+app/controllers/api/v1/follows_controller.rb:12:in `destroy'
+  
+ActiveRecord::RecordNotFound (Couldn't find Follow with [WHERE "follows"."follower_id" = $1 AND "follows"."followed_id" IS NULL]):
+  
+app/controllers/api/v1/follows_controller.rb:12:in `destroy'

@@ -13,12 +13,35 @@ RAND1=$RANDOM
 RAND2=$RANDOM
 
 echo
-echo "🔹 Creating User 1 (id=1)..."
-curl -s -w "\nHTTP %{http_code}\n" -X POST "$BASE_URL/users"   -H "Content-Type: application/json"   -d '{"id":1,"name":"Ryan C-'$RAND1'"}'
+echo "🔹 Ensuring User 1 (id=1) exists..."
+resp=$(curl -s -w "\n%{http_code}" "$BASE_URL/users/1")
+body=$(echo "$resp" | head -n1)
+status=$(echo "$resp" | tail -n1)
+
+if [ "$status" = "200" ]; then
+  echo "User 1 already exists"
+else
+  echo "Creating User 1..."
+  curl -s -w "\nHTTP %{http_code}\n" -X POST "$BASE_URL/users" \
+    -H "Content-Type: application/json" \
+    -d '{"id":1,"name":"Ryan C-'"$RAND1"'"}'
+fi
 
 echo
-echo "🔹 Creating User 2 (id=2)..."
-curl -s -w "\nHTTP %{http_code}\n" -X POST "$BASE_URL/users"   -H "Content-Type: application/json"   -d '{"id":2,"name":"Ian K-'$RAND2'"}'
+echo "🔹 Ensuring User 2 (id=2) exists..."
+resp=$(curl -s -w "\n%{http_code}" "$BASE_URL/users/2")
+body=$(echo "$resp" | head -n1)
+status=$(echo "$resp" | tail -n1)
+
+if [ "$status" = "200" ]; then
+  echo "User 2 already exists"
+else
+  echo "Creating User 2..."
+  curl -s -w "\nHTTP %{http_code}\n" -X POST "$BASE_URL/users" \
+    -H "Content-Type: application/json" \
+    -d '{"id":2,"name":"Ian K-'"$RAND2"'"}'
+fi
+
 
 echo
 echo "1. Clock In (User $USER1)"

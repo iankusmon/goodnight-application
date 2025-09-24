@@ -20,7 +20,7 @@
    ```
 
    if error, cause of ruby version do this:
-   
+
    ```bash
    mise local ruby@3.2.2
    exec $SHELL -l
@@ -43,7 +43,7 @@
 
 ## 🧪 Testing Scenarios
 
-- **RSpec**
+- **RSpec*
   ```bash
   bin/rspec
   ```
@@ -52,6 +52,7 @@
   ```bash
   bin/rspec spec/requests/sleep_sessions_spec.rb
   bin/rspec spec/requests/follows_and_feed_spec.rb
+  bin/rspec spec/requests/large_data_spec.rb
   ```
 
 - **API Smoke Test with `curl`**

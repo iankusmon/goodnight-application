@@ -3,3 +3,12 @@
 
 # Ada Library Information
 *.ali
+
+# Ignore bundle vendor directory
+/vendor/bundle
+
+# Ignore temporary files cache
+tmp/
+
+# Ignore DS_Store files
+.DS_Store
